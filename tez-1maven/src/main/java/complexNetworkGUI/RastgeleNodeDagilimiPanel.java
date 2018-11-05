@@ -1,4 +1,4 @@
-package tez_1maven.test;
+package complexNetworkGUI;
 
 import java.awt.Color;
 
@@ -12,16 +12,16 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
-public class NodelarinEtkilesimiDagilimiPanel extends JPanel {
+public class RastgeleNodeDagilimiPanel extends JPanel {
 	private static final long serialVersionUID = 6294689542092367723L;
 
-	public NodelarinEtkilesimiDagilimiPanel(Double[] ideas) {
+	public RastgeleNodeDagilimiPanel(Double[] ideas) {
 
 		// Create dataset
 		XYDataset dataset = createDataset(ideas);
 
 		// Create chart
-		JFreeChart chart = ChartFactory.createScatterPlot(" Fikirlerin Yakınlaşması(Homojen Dağılım) ", "X(Node'lar) ", "Y(Fikirler)", dataset);
+		JFreeChart chart = ChartFactory.createScatterPlot(" Fikirlerin Dağılımı (Homojen Dağılım) ", "X(Node'lar) ", "Y (Fikirler)", dataset);
 
 		// Changes background color
 		XYPlot plot = (XYPlot) chart.getPlot();
@@ -33,17 +33,18 @@ public class NodelarinEtkilesimiDagilimiPanel extends JPanel {
 	}
 
 	private XYDataset createDataset(Double[] ideas) {
-		  XYSeries series = new XYSeries("Node Bağları");
-	       
-	        for(int i=0;i<ideas.length;i++)
-	        {
-	        	series.add(i, ideas[i]);
-	        }
+		XYSeriesCollection dataset = new XYSeriesCollection();
 
-	        XYSeriesCollection dataset = new XYSeriesCollection();
-	        dataset.addSeries(series);
+		//
+		XYSeries series1 = new XYSeries("NODE");
+		for (int i = 0; i < ideas.length; i++) {
 
-	        return dataset;
+			series1.add(i, ideas[i]);
+		}
+
+		dataset.addSeries(series1);
+
+		return dataset;
 	}
 
 }

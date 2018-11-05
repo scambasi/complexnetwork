@@ -5,6 +5,10 @@ import java.awt.GraphicsConfiguration;
 
 import javax.swing.JFrame;
 
+import complexNetworkBLO.IdeaIslemleri;
+import complexNetworkGUI.NodelarinEtkilesimiDagilimiPanel;
+import complexNetworkGUI.NodelarinEtkilesimiDistributionPanel;
+
 public class MainFrame_2_FikirEtkilesimi extends JFrame {
 
 
@@ -21,8 +25,8 @@ public class MainFrame_2_FikirEtkilesimi extends JFrame {
 		Double[] id=new Double[0];
 		Double[] karistirilmisId=new Double[0];
 		
-		id=ideas.fillIdea();
-		karistirilmisId=ideas.karistirIdea(id,KARISTIRMA_PARAMETRESI);
+		id=ideas.fillIdea(100);
+		karistirilmisId=ideas.karistirIdea(id,KARISTIRMA_PARAMETRESI,100,0.1,0.1);
 		
 		
 		//RastgeleNodeDagilimiPanel dagilimiPanel=new RastgeleNodeDagilimiPanel(id);
@@ -31,7 +35,7 @@ public class MainFrame_2_FikirEtkilesimi extends JFrame {
 		NodelarinEtkilesimiDagilimiPanel etkilesimiDagilimiPanel=
 				new NodelarinEtkilesimiDagilimiPanel(karistirilmisId);
 		NodelarinEtkilesimiDistributionPanel 
-		etkilesimiDistributionPanel=new NodelarinEtkilesimiDistributionPanel(ideas.fikirDistrubition(karistirilmisId));
+		etkilesimiDistributionPanel=new NodelarinEtkilesimiDistributionPanel(ideas.fikirDistrubition(karistirilmisId,10));
 		frame.setLayout(new FlowLayout());
 		//frame.add(dagilimiPanel);
 		//frame.add(distributionPanel);

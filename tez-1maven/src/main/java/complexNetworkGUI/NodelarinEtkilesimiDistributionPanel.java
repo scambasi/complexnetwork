@@ -1,4 +1,4 @@
-package tez_1maven.test;
+package complexNetworkGUI;
 
 import java.awt.Color;
 
