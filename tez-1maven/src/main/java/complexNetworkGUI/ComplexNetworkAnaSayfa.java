@@ -35,6 +35,7 @@ import complexNetworkBLO.IdeaIslemleri;
 import complexNetworkGUI.RastgeleNodeDagilimiPanel;
 import javax.swing.ButtonGroup;
 import java.awt.FlowLayout;
+import javax.swing.JComboBox;
 
 public class ComplexNetworkAnaSayfa {
 
@@ -104,12 +105,13 @@ public class ComplexNetworkAnaSayfa {
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
 				.addGroup(groupLayout.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 						.addGroup(groupLayout.createSequentialGroup()
-							.addGap(12)
+							.addGap(24)
 							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 760, GroupLayout.PREFERRED_SIZE))
-						.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 782, Short.MAX_VALUE))
+						.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(panel_1, GroupLayout.PREFERRED_SIZE, 782, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -134,21 +136,21 @@ public class ComplexNetworkAnaSayfa {
 		buttonGroup.add(rd_btn_dagilim);
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
-			gl_panel_2.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_panel_2.createSequentialGroup()
+			gl_panel_2.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_2.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(rd_btn_dagilim)
-					.addGap(54)
+					.addGap(18)
 					.addComponent(rd_btn_dist)
-					.addContainerGap(53, Short.MAX_VALUE))
+					.addContainerGap(40, Short.MAX_VALUE))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_panel_2.createSequentialGroup()
-					.addContainerGap(20, Short.MAX_VALUE)
+					.addContainerGap(12, Short.MAX_VALUE)
 					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
-						.addComponent(rd_btn_dist)
-						.addComponent(rd_btn_dagilim, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE))
+						.addComponent(rd_btn_dagilim, GroupLayout.PREFERRED_SIZE, 31, GroupLayout.PREFERRED_SIZE)
+						.addComponent(rd_btn_dist))
 					.addContainerGap())
 		);
 		panel_2.setLayout(gl_panel_2);
@@ -162,24 +164,30 @@ public class ComplexNetworkAnaSayfa {
 		
 		final JRadioButton rd_btn_rst_tum_yaklasim = new JRadioButton("Rastgele D Yaklaşım");
 		buttonGroup_1.add(rd_btn_rst_tum_yaklasim);
+		
+		final JRadioButton rd_btn_rndnetwork = new JRadioButton("Random Network");
+		buttonGroup_1.add(rd_btn_rndnetwork);
 		GroupLayout gl_panel_3 = new GroupLayout(panel_3);
 		gl_panel_3.setHorizontalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_3.createSequentialGroup()
-					.addContainerGap(13, Short.MAX_VALUE)
-					.addComponent(rd_btn_rst_tum)
-					.addGap(18)
-					.addComponent(rd_btn_rst_tum_yaklasim)
-					.addContainerGap())
-		);
-		gl_panel_3.setVerticalGroup(
 			gl_panel_3.createParallelGroup(Alignment.TRAILING)
 				.addGroup(Alignment.LEADING, gl_panel_3.createSequentialGroup()
 					.addContainerGap()
+					.addComponent(rd_btn_rst_tum)
+					.addGap(18)
+					.addComponent(rd_btn_rst_tum_yaklasim)
+					.addGap(18)
+					.addComponent(rd_btn_rndnetwork)
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+		);
+		gl_panel_3.setVerticalGroup(
+			gl_panel_3.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addContainerGap(26, Short.MAX_VALUE)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(rd_btn_rst_tum)
-						.addComponent(rd_btn_rst_tum_yaklasim))
-					.addContainerGap(26, Short.MAX_VALUE))
+						.addComponent(rd_btn_rst_tum_yaklasim)
+						.addComponent(rd_btn_rndnetwork))
+					.addContainerGap())
 		);
 		panel_3.setLayout(gl_panel_3);
 		
@@ -271,7 +279,6 @@ public class ComplexNetworkAnaSayfa {
 									.addContainerGap(25, Short.MAX_VALUE))
 						);
 						panel_4.setLayout(gl_panel_4);
-		
 				JButton btnSorgula = new JButton("sorgula");
 				btnSorgula.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -335,6 +342,13 @@ public class ComplexNetworkAnaSayfa {
 								panel.add(etkilesimiDistributionPanel);
 							}
 						}
+						else if(rd_btn_rndnetwork.isSelected())
+						{	panel.removeAll();		
+							IdeaIslemleri ideaIslemleri=new IdeaIslemleri();
+					    	Double[][] randomNetwork= ideaIslemleri.randomNetwork(NODE_SAYISI, id);
+					    	RandomNetworkPanel rd=new RandomNetworkPanel(randomNetwork,id);
+					    	panel.add(rd);
+						}
 						panel.revalidate();
 						panel.repaint();
 
@@ -346,10 +360,10 @@ public class ComplexNetworkAnaSayfa {
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_1.createSequentialGroup()
-							.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 361, GroupLayout.PREFERRED_SIZE)
-							.addGap(12)
-							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 311, GroupLayout.PREFERRED_SIZE))
+						.addGroup(Alignment.TRAILING, gl_panel_1.createSequentialGroup()
+							.addComponent(panel_3, GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 222, GroupLayout.PREFERRED_SIZE))
 						.addComponent(panel_4, Alignment.TRAILING, GroupLayout.PREFERRED_SIZE, 744, Short.MAX_VALUE)
 						.addComponent(btnSorgula))
 					.addContainerGap())
@@ -359,9 +373,9 @@ public class ComplexNetworkAnaSayfa {
 				.addGroup(gl_panel_1.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_1.createParallelGroup(Alignment.BASELINE)
-						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE)
-						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(ComponentPlacement.RELATED)
+						.addComponent(panel_3, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
+						.addComponent(panel_2, GroupLayout.PREFERRED_SIZE, 73, GroupLayout.PREFERRED_SIZE))
+					.addGap(18)
 					.addComponent(panel_4, GroupLayout.PREFERRED_SIZE, 125, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(btnSorgula)

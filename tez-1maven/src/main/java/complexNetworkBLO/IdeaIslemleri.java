@@ -90,4 +90,51 @@ public class IdeaIslemleri {
 		}
 		return distrubitions;
 	}
+	public Double[][] randomNetwork(int nodeSayisi,Double[] nNode)
+	{
+		Double[] randomNodes=nNode;
+		Double[][] randomNetwork=new Double[nodeSayisi][nodeSayisi];
+		for(int i=0;i<randomNetwork.length;i++)
+		{
+    		for(int j=0;j<randomNetwork[i].length;j++)
+			{
+				randomNetwork[i][j] = new Double(0);
+			}
+			
+		}
+		/**
+		 * node sayısını n.n-1/2 defa hesaplıyacağız
+		 */
+		int nodeHesabi=((randomNodes.length)*(randomNodes.length-1))/2;
+		int mod=randomNodes.length;
+		for(int i=0;i<nodeHesabi;i++)
+		{
+			double node1=randomNodes[i%mod];
+			for(int j=0;j<randomNodes.length;j++)
+			{
+				double node2=randomNodes[j];
+				double rastgele= (double) Math.random();
+				/**
+				 * iki nodun ortalaması alınıp rastgele sayıdan büyükse komşu oluyorlar.
+				 * 
+				 */
+				/**
+				 * k komşu sayısı kaç tane bilmiyoruz hepsini tutuyoruz;
+				 */
+				
+				if(((node1+node2)/2)>rastgele)
+				{
+			    	randomNetwork[i%mod][j]=(double)j;
+					
+				}else
+				{
+					randomNetwork[i%mod][j]=(double)-1;
+				}
+			}
+		
+			
+		}
+		
+		return randomNetwork;
+	}
 }
