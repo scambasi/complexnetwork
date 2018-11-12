@@ -105,11 +105,10 @@ public class IdeaIslemleri {
 		/**
 		 * node sayısını n.n-1/2 defa hesaplıyacağız
 		 */
-		int nodeHesabi=((randomNodes.length)*(randomNodes.length-1))/2;
-		int mod=randomNodes.length;
-		for(int i=0;i<nodeHesabi;i++)
+	
+		for(int i=0;i<nNode.length;i++)
 		{
-			double node1=randomNodes[i%mod];
+			double node1=randomNodes[i];
 			for(int j=0;j<randomNodes.length;j++)
 			{
 				double node2=randomNodes[j];
@@ -122,13 +121,13 @@ public class IdeaIslemleri {
 				 * k komşu sayısı kaç tane bilmiyoruz hepsini tutuyoruz;
 				 */
 				
-				if(((node1+node2)/2)>rastgele)
+				if((0.5>rastgele))
 				{
-			    	randomNetwork[i%mod][j]=(double)j;
+			    	randomNetwork[i][j]=(double)j;
 					
 				}else
 				{
-					randomNetwork[i%mod][j]=(double)-1;
+					randomNetwork[i][j]=(double)-1;
 				}
 			}
 		

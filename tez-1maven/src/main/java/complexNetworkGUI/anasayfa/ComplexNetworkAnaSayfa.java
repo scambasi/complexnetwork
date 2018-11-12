@@ -1,4 +1,4 @@
-package complexNetworkGUI;
+package complexNetworkGUI.anasayfa;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
@@ -32,7 +32,13 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 import complexNetworkBLO.IdeaIslemleri;
+import complexNetworkBLO.RandomNetworkIslemleri;
+import complexNetworkGUI.NodelarinEtkilesimiDagilimiPanel;
+import complexNetworkGUI.NodelarinEtkilesimiDistributionPanel;
+import complexNetworkGUI.RandomNetworkDistrubitionPanel;
 import complexNetworkGUI.RastgeleNodeDagilimiPanel;
+import complexNetworkGUI.RastgeleNodeDistributionPanel;
+
 import javax.swing.ButtonGroup;
 import java.awt.FlowLayout;
 import javax.swing.JComboBox;
@@ -344,10 +350,11 @@ public class ComplexNetworkAnaSayfa {
 						}
 						else if(rd_btn_rndnetwork.isSelected())
 						{	panel.removeAll();		
-							IdeaIslemleri ideaIslemleri=new IdeaIslemleri();
-					    	Double[][] randomNetwork= ideaIslemleri.randomNetwork(NODE_SAYISI, id);
-					    	RandomNetworkPanel rd=new RandomNetworkPanel(randomNetwork,id);
-					    	panel.add(rd);
+							RandomNetworkIslemleri randomNetworkIslemleri=new RandomNetworkIslemleri();
+							Double[][] rd= randomNetworkIslemleri.randomNetwork(0.5, 1000);
+							RandomNetworkDistrubitionPanel distributionPanel=
+									new RandomNetworkDistrubitionPanel(randomNetworkIslemleri.distrubitionHesabi(rd));
+					    	panel.add(distributionPanel );
 						}
 						panel.revalidate();
 						panel.repaint();
