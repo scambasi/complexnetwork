@@ -288,74 +288,7 @@ public class ComplexNetworkAnaSayfa {
 				JButton btnSorgula = new JButton("sorgula");
 				btnSorgula.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						IdeaIslemleri ideas = new IdeaIslemleri();
 						
-						Double[] karistirilmisId=new Double[0];
-					  /**
-					   * PARAMETERELERİN ALINMASI
-					   */
-					   if(!txt_karistirma.getText().isEmpty()) {
-						   KARISTIRMA_PARAMETRESI=new Integer(txt_karistirma.getText().toString());
-					   }
-					   if(!txt_fikir_yaklas.getText().isEmpty()) {
-						   FIKIR_YAKINLASMASI_KATSAYISI=new Double(txt_fikir_yaklas.getText().toString());
-					   }
-					   if(!txt_karar_ver.getText().isEmpty()) {
-						   FIKIR_KARAR_VERME_KATSAYISI=new Double(txt_karar_ver.getText().toString());
-					   }
-					   if(!txt_node_say.getText().isEmpty()) {
-						   NODE_SAYISI=new Integer(txt_node_say.getText().toString());
-					   }
-					   if(!txt_dist_param.getText().isEmpty()) {
-						   DISTRIBUTION_KATSAYISI=new Integer(txt_dist_param.getText().toString());
-					   }
-					  
-						
-						if(rd_btn_rst_tum.isSelected()) {
-							
-							if (rd_btn_dagilim.isSelected()) {
-								panel.removeAll();
-								id = ideas.fillIdea(NODE_SAYISI);
-								RastgeleNodeDagilimiPanel dagilimiPanel = new RastgeleNodeDagilimiPanel(id);
-	
-								panel.add(dagilimiPanel);
-	
-							}
-							if (rd_btn_dist.isSelected()) {
-								panel.removeAll();
-								
-								RastgeleNodeDistributionPanel distributionPanel = new RastgeleNodeDistributionPanel(
-										ideas.fikirDistrubition(id,DISTRIBUTION_KATSAYISI));
-								panel.add(distributionPanel);
-							}
-						}
-						else if(rd_btn_rst_tum_yaklasim.isSelected())
-						{
-						
-							if (rd_btn_dagilim.isSelected()) {
-								panel.removeAll();
-								karistirilmisId=ideas.karistirIdea(id,KARISTIRMA_PARAMETRESI,NODE_SAYISI,FIKIR_KARAR_VERME_KATSAYISI,FIKIR_YAKINLASMASI_KATSAYISI);
-								NodelarinEtkilesimiDagilimiPanel etkilesimiDagilimiPanel=
-										new NodelarinEtkilesimiDagilimiPanel(karistirilmisId);
-								panel.add(etkilesimiDagilimiPanel);
-	
-							}
-							else if (rd_btn_dist.isSelected()) {
-								panel.removeAll();
-								karistirilmisId=ideas.karistirIdea(id,KARISTIRMA_PARAMETRESI,NODE_SAYISI,FIKIR_KARAR_VERME_KATSAYISI,FIKIR_YAKINLASMASI_KATSAYISI);
-								NodelarinEtkilesimiDistributionPanel 
-								etkilesimiDistributionPanel=new NodelarinEtkilesimiDistributionPanel(ideas.fikirDistrubition(karistirilmisId,DISTRIBUTION_KATSAYISI));
-								panel.add(etkilesimiDistributionPanel);
-							}
-						}
-						else if(rd_btn_rndnetwork.isSelected())
-						{	panel.removeAll();		
-							RandomNetworkIslemleri randomNetworkIslemleri=new RandomNetworkIslemleri();
-							Double[][] rd= randomNetworkIslemleri.randomNetwork(0.5, 1000);
-							RandomNetworkDistrubitionPanel distributionPanel=
-									new RandomNetworkDistrubitionPanel(randomNetworkIslemleri.distrubitionHesabi(rd));
-					    	panel.add(distributionPanel );
-						}
 						panel.revalidate();
 						panel.repaint();
 
