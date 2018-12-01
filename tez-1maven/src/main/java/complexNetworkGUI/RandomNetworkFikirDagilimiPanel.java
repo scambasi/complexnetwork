@@ -15,7 +15,7 @@ import org.jfree.data.xy.XYSeriesCollection;
 public class RandomNetworkFikirDagilimiPanel extends JPanel {
 	private static final long serialVersionUID = 6294689542092367723L;
 
-	public RandomNetworkFikirDagilimiPanel(Double[] ideas) {
+	public RandomNetworkFikirDagilimiPanel(Float[] ideas) {
 
 		// Create dataset
 		XYDataset dataset = createDataset(ideas);
@@ -32,7 +32,7 @@ public class RandomNetworkFikirDagilimiPanel extends JPanel {
 		add(panel);
 	}
 
-	private XYDataset createDataset(Double[] ideas) {
+	private XYDataset createDataset(Float[] ideas) {
 		  XYSeries series = new XYSeries("Node Bağları");
 	       
 	        for(int i=0;i<ideas.length;i++)

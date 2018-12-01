@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -18,6 +19,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.border.TitledBorder;
 
 import complexNetworkBLO.RandomNetworkFikirDagitIslemleri;
+import complexNetworkBLO.YazmaIslemleri;
+import complexNetworkGUI.RandomNetworkDistrubitionPanel;
 import complexNetworkGUI.RandomNetworkFikirDagilimiPanel;
 
 public class RandomNetworkFikirlerAnaSayfa {
@@ -30,15 +33,16 @@ public class RandomNetworkFikirlerAnaSayfa {
 	 * PARAMETRELER
 	 */
 
-	Double RANDOM_NETWORK_ESIGI_DEGERI = 0.1;
-	Integer NODE_SAYISI = 0;
-	Double FIKIR_ESIK_DEGERI = 0.1; // a sayısı
-	Double FIKIR_ESIK_YAKINLASMA = 0.1; // e sayısı
-	Double[][] randomNetwork;
-	Double[] fikirler;
-	int zamanSayaci=0;
-
-
+	Float RANDOM_NETWORK_ESIGI_DEGERI = (float) 0.1;
+	Integer NODE_SAYISI = 500;
+	Float FIKIR_ESIK_DEGERI = (float) 0.1; // a sayısı
+	Float FIKIR_ESIK_YAKINLASMA = (float) 0.1; // e sayısı
+	public static int NSAMPLE=20;
+	public static int ITERASYON =100; // iterasyon
+	public static int DIST_PARAM = 10;
+	
+	Float[][] randomNetwork;
+	Float[] fikirler;
 	/**
 	 * 
 	 */
@@ -142,34 +146,20 @@ public class RandomNetworkFikirlerAnaSayfa {
 		btnFikirAta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				RandomNetworkFikirDagitIslemleri rn=new RandomNetworkFikirDagitIslemleri();
-				FIKIR_ESIK_DEGERI=new Double(txt_esigi.getText());
-				FIKIR_ESIK_YAKINLASMA=new Double(txt_fikiryaklasimi.getText());
-				RANDOM_NETWORK_ESIGI_DEGERI=new Double(txt_random_esik.getText());
+				FIKIR_ESIK_DEGERI=new Float(txt_esigi.getText());
+				FIKIR_ESIK_YAKINLASMA=new Float(txt_fikiryaklasimi.getText());
+				RANDOM_NETWORK_ESIGI_DEGERI=new Float(txt_random_esik.getText());
 				NODE_SAYISI=new Integer(txt_node_say.getText());
 				
-				if(zamanSayaci==0)
-				{
+				
 					panel.removeAll();
-					btnFikirAta.setText("Fikir Güncelle");
-					randomNetwork= rn.randomNetwork(RANDOM_NETWORK_ESIGI_DEGERI, NODE_SAYISI);
-					 fikirler=rn.fikirDagit(NODE_SAYISI);
-					 RandomNetworkFikirDagilimiPanel panelRandom=new RandomNetworkFikirDagilimiPanel(fikirler);
-					 panel.add(panelRandom);
-				}
-				else if(zamanSayaci>0)
-				{
-					panel.removeAll();
-					btnFikirAta.setText("Fikir Güncelle");
-				    fikirler=rn.guncelleFikir(RANDOM_NETWORK_ESIGI_DEGERI,
-				    		NODE_SAYISI, FIKIR_ESIK_DEGERI, FIKIR_ESIK_YAKINLASMA, randomNetwork, fikirler);
-				    RandomNetworkFikirDagilimiPanel panelRandom=new RandomNetworkFikirDagilimiPanel(fikirler);
-					 panel.add(panelRandom);
 					
-				}
+					 RandomNetworkDistrubitionPanel panelRandom=new RandomNetworkDistrubitionPanel(distributionUret());
+					 panel.add(panelRandom);
+			
 				panel.revalidate();
 				panel.repaint();
-				zamanSayaci++;
-				txtTxtsayac.setText(zamanSayaci+"");
+				
 			}
 		});
 		
@@ -258,5 +248,57 @@ public class RandomNetworkFikirlerAnaSayfa {
 		);
 		panel_1.setLayout(gl_panel_1);
 		frame.getContentPane().setLayout(groupLayout);
+	}
+	public Integer[] distributionUret()
+	{
+		ArrayList<ArrayList<Object[]>> sample=new ArrayList<ArrayList<Object[]>>();
+		YazmaIslemleri yi=new YazmaIslemleri();
+		
+		for(int k=0;k<NSAMPLE;k++)
+		{
+			ArrayList<Object[]> yazilacaklar=new ArrayList<Object[]>();
+			
+			RandomNetworkFikirDagitIslemleri rd=new RandomNetworkFikirDagitIslemleri();
+			
+			
+			randomNetwork= rd.randomNetwork(RANDOM_NETWORK_ESIGI_DEGERI, NODE_SAYISI);
+				
+				 
+			for(int i=0;i<ITERASYON;i++)
+			{
+				Object[] yazdir=new Object[2];
+				if(i==0)
+				{
+					fikirler=rd.fikirDagit(NODE_SAYISI);
+					
+				}
+				else
+				{
+					fikirler=rd.guncelleFikir(RANDOM_NETWORK_ESIGI_DEGERI,
+			    		NODE_SAYISI, FIKIR_ESIK_DEGERI, FIKIR_ESIK_YAKINLASMA, randomNetwork, fikirler);
+				}
+				
+			    Integer[] dist=  rd.distributionHesapla(fikirler, DIST_PARAM);
+			    float ort=rd.ortalama(fikirler);
+			    yazdir[0]=dist;
+			    yazdir[1]=ort;
+			    yazilacaklar.add(yazdir);
+			    
+			   
+
+			}
+			 sample.add(yazilacaklar);
+		}
+
+		
+	    ArrayList<Object[]> list= yi.txtYazNSample(sample, DIST_PARAM);
+	    Integer[] dist=new Integer[NSAMPLE];
+	    for(int i=0;i<list.size();i++)
+	    {
+	    	Object[] obj=list.get(i);
+	    	dist=(Integer[])obj[0];
+	    	
+	    }
+	    return dist;
 	}
 }

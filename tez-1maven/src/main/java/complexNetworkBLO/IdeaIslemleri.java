@@ -78,15 +78,12 @@ public class IdeaIslemleri {
 			for(int j=1;j<=distrubitonParam;j++) {
 				Double ilksayi=fikirlerLocal[i]*10;
 				int sayi=ilksayi.intValue();
-			if(sayi<(j))
-			{
-				distrubitions[j-1]=++distrubitions[j-1];
-				break;
+				if(sayi<(j))
+				{
+					distrubitions[j-1]=++distrubitions[j-1];
+					break;
+				}
 			}
-			
-			}
-			
-
 		}
 		return distrubitions;
 	}
